@@ -1,0 +1,31 @@
+services:
+  # --- postgres container ---
+  postgres:
+    image: postgres:18-alpine
+    container_name: chat-postgres
+    environment:
+      POSTGRES_DB: chatengine
+      POSTGRES_USER: chatuser
+      POSTGRES_PASSWORD: chatpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # --- spring boot container ---
+  app:
+    build: .
+    container_name: chat-app
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/chatengine
+      SPRING_DATASOURCE_USERNAME: chatuser
+      SPRING_DATASOURCE_PASSWORD: chatpass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

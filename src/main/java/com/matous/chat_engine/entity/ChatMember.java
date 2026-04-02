@@ -6,6 +6,7 @@ import lombok.*;
 @Entity
 @Table(
         name = "chat_members",
+        // ten samy uzivatel nemuze byt ve stejnem chatu vicekrat
         uniqueConstraints = @UniqueConstraint(
                 columnNames = {"chat_id", "username"}
         )

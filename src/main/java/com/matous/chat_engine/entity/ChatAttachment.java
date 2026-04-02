@@ -15,15 +15,15 @@ public class ChatAttachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long attachmentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private ChatMember senderId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "sender_id", nullable = false)
+    private ChatMember sender;
 
-    @Column(name = "filename",  nullable = false)
+    @Column(name = "filename", nullable = false)
     private String filename;
 
     @Column(name = "data", nullable = false, columnDefinition = "BYTEA")
